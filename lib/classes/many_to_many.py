@@ -2,24 +2,30 @@ class Coffee:
     def __init__(self, name):
         self.name = name
 
+    # Deliverable - Coffee property name
     @property
     def coffee_name_getter(self):
         return self._name
     
+    # Deliverable - Coffee property name
     @coffee_name_getter.setter
     def name(self, name_value):
         if (not hasattr(self, 'name')) and (type(name_value) == str) and (len(name_value) >= 3):
             self._name = name_value
         
+    # Deliverable - Coffee orders()
     def orders(self):
         return [order for order in Order.all if order.coffee is self]
     
+    # Deliverable - Coffee customers()
     def customers(self):
         return list(set([order.customer for order in self.orders()]))
     
+    # Deliverable - Coffee num_orders()
     def num_orders(self):
         return len(self.orders())
     
+    # Deliverable - Coffee average_price()
     def average_price(self):
         if self.num_orders() == 0:
             return 0
@@ -31,21 +37,26 @@ class Customer:
     def __init__(self, name):
         self.name = name
 
+    # Deliverable - Customer property name
     @property
     def name_getter(self):
         return self._name
     
+    # Deliverable - Customer property name
     @name_getter.setter
     def name(self, name_value):
         if (type(name_value) == str) and (1 <= len(name_value) <= 15):
             self._name = name_value
-        
+    
+    # Deliverable - Customer orders()
     def orders(self):
         return [order for order in Order.all if order.customer is self]
     
+    # Deliverable - Customer coffees()
     def coffees(self):
         return list(set([order.coffee for order in self.orders()]))
     
+    # Deliverable - Customer create_order(coffee, price)
     def create_order(self, coffee, price):
         return Order(self, coffee, price)
     
@@ -59,28 +70,34 @@ class Order:
         self.price = price
         Order.all.append(self)
 
+    # Deliverable - Order property price
     @property
     def price(self):
         return self._price
     
+    # Deliverable - Order property price
     @price.setter
     def price(self, value):
         if (type(value) is float) and (not hasattr(self, 'price')) and (1.0 <= value <= 10.0):
             self._price = value
 
+    # Deliverable - Order property customer
     @property
     def customer_getter(self):
         return self._customer
     
+    # Deliverable - Order property customer
     @customer_getter.setter
     def customer(self, value):
         if type(value) == Customer:
             self._customer = value
 
+    # Deliverable - Order property coffee
     @property
     def coffee_getter(self):
         return self._coffee
     
+    # Deliverable - Order property coffee
     @coffee_getter.setter
     def coffee(self, value):
         if isinstance(value, Coffee):
